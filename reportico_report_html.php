@@ -7,7 +7,7 @@
  modify it under the terms of the GNU General Public License
  as published by the Free Software Foundation; either version 2
  of the License, or (at your option) any later version.
- 
+
  This program is distributed in the hope that it will be useful,
  but WITHOUT ANY WARRANTY; without even the implied warranty of
  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -20,7 +20,7 @@
  * File:        reportico_report_html.php
  *
  * Base class for all report output formats.
- * Defines base functionality for handling report 
+ * Defines base functionality for handling report
  * page headers, footers, group headers, group trailers
  * data lines
  *
@@ -44,7 +44,7 @@ class reportico_report_html extends reportico_report
 	var	$graph_session_placeholder = 0;
 	var	$tbody_started = false;
 	var	$tfoot_started = false;
-	
+
 	function __construct ()
 	{
 		return;
@@ -75,7 +75,7 @@ class reportico_report_html extends reportico_report
         if ( preg_match("/\?/", $this->query->get_action_url()) )
             $url_join_char = "&";
         else
-            $url_join_char = "?"; 
+            $url_join_char = "?";
 
 		if ( $this->line_count < 1 )
 		{
@@ -116,7 +116,7 @@ class reportico_report_html extends reportico_report
 			$this->debug("No html file specified !!!");
 			$buf = "";
 			$len = strlen($buf) + 1;
-	
+
 			print($buf);
 		}
 
@@ -144,8 +144,8 @@ class reportico_report_html extends reportico_report
 		$height = (int)$height_string;
 		if ( strstr($height_string, "%" ) )
 		{
-			$height = (int)
-				( $this->page_height * $height_string ) / 100;
+			if ($height_string)$height_string = 1;
+			$height = (int) ( $this->page_height * $height_string ) / 100;
 		}
 
 		return $height;
@@ -224,11 +224,11 @@ class reportico_report_html extends reportico_report
     {
         $txt = '<img src="'.$image["image"].'" alt="" ';
         if ( isset($image["height"]) && $image["height"] ) $txt .= ' height="'.$image["height"].'"';
-        if ( isset($image["width"]) && $image["width"] ) $txt .= ' width="'.$image["width"].'"'; 
+        if ( isset($image["width"]) && $image["width"] ) $txt .= ' width="'.$image["width"].'"';
         $txt .= " /> ";
         return $txt;
     }
-    
+
     function format_hyperlinks ( $hyperlinks, $padstring )
     {
         $open = "";
@@ -255,7 +255,7 @@ class reportico_report_html extends reportico_report
             $txt = '<a href="'.$url.'"'.$open.'>'.$hyperlinks["label"].'</a>';
         return $txt;
     }
-    
+
     function extract_styles_and_text_from_string ( &$text, &$styles, &$attributes, $parent_styleset = false, $grandparent_styleset = false)
     {
         $outtext = "";
@@ -280,25 +280,25 @@ class reportico_report_html extends reportico_report
         if ( isset ( $attributes["justify"] ) )
         {
             if ( $attributes["justify"] == "center" )
-                $styles .= "text-align: center;"; 
+                $styles .= "text-align: center;";
             if ( $attributes["justify"] == "right" )
-                $styles .= "text-align: right;"; 
+                $styles .= "text-align: right;";
         }
 
         if ( isset ( $attributes["ColumnWidthPDF"] ) && $attributes["ColumnWidthPDF"] )
         {
             if ( is_numeric ($attributes["ColumnWidthPDF"]) )
-                $styles .= "width: ".$attributes["ColumnWidthPDF"]."px;"; 
+                $styles .= "width: ".$attributes["ColumnWidthPDF"]."px;";
             else
-                $styles .= "width: ".$attributes["ColumnWidthPDF"].";"; 
+                $styles .= "width: ".$attributes["ColumnWidthPDF"].";";
         }
 
         if ( isset ( $attributes["ColumnStartPDF"] ) && $attributes["ColumnStartPDF"] )
         {
             if ( is_numeric ($attributes["ColumnStartPDF"]) )
-                $styles .= "margin-left: ".$attributes["ColumnStartPDF"]."px;"; 
+                $styles .= "margin-left: ".$attributes["ColumnStartPDF"]."px;";
             else
-                $styles .= "margin-left: ".$attributes["ColumnStartPDF"]."24;"; 
+                $styles .= "margin-left: ".$attributes["ColumnStartPDF"]."24;";
         }
 
         if ( $style_arr )
@@ -410,8 +410,8 @@ class reportico_report_html extends reportico_report
 			default :
 				$this->text .= "<TR><TD>Unknown Format $in_value</TD></TR>";
 				break;
-				
-		}	
+
+		}
 	}
 
 	function format_headers()
@@ -535,7 +535,7 @@ class reportico_report_html extends reportico_report
 		if ( !get_reportico_session_param("target_show_group_trailers") )
 			return;
 		$just = $trailer_col->derive_attribute( "justify", false);
-        if ( $just && $just != "left" ) 
+        if ( $just && $just != "left" )
                 $this->query->output_group_trailer_styles["text-align"] = $just;
         else
                 $this->query->output_group_trailer_styles["text-align"] = "left";
@@ -632,7 +632,7 @@ class reportico_report_html extends reportico_report
                 switch ( $formpagethrow )
                 {
                     case "newpage":
-		                if ( $this->page_line_count > 0 ) 
+		                if ( $this->page_line_count > 0 )
                             $formpagethrow = "swRepPageFormLine swNewPage";
                         else
                             $formpagethrow = "swRepPageFormLine";
@@ -726,7 +726,7 @@ class reportico_report_html extends reportico_report
         if ( preg_match("/\?/", $this->query->get_action_url()) )
             $url_join_char = "&";
         else
-            $url_join_char = "?"; 
+            $url_join_char = "?";
 
 
 	    if ( !get_request_item("printable_html") )
